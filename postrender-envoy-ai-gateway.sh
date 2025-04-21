@@ -19,7 +19,7 @@ kubectl apply -f https://raw.githubusercontent.com/envoyproxy/ai-gateway/main/ma
 kubectl apply -f https://raw.githubusercontent.com/envoyproxy/ai-gateway/main/manifests/envoy-gateway-config/rbac.yaml
 
 # Apply the Bedrock configuration
-echo "Applying Bedrock configuration..."
+echo "Applying Routing configuration for Bedrock models..."
 cat > /tmp/bedrock-config.yaml << EOF
 apiVersion: gateway.envoyproxy.io/v1alpha1
 kind: EnvoyGateway
