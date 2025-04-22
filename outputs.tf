@@ -36,3 +36,30 @@ output "kubernetes_config" {
     token                  = data.aws_eks_cluster_auth.cluster.token
   }
 }
+
+output "cluster_name" {
+  description = "The name of the EKS cluster."
+  value       = module.eks.cluster_name
+}
+
+output "region" {
+  description = "The AWS region where the cluster is deployed."
+  value       = var.region
+}
+
+output "gateway_address" {
+  description = "The address of the Envoy AI Gateway LoadBalancer."
+  value       = "kubectl get svc -n envoy-gateway-system -l app.kubernetes.io/name=envoy,app.kubernetes.io/component=proxy -o jsonpath='{.items[0].status.loadBalancer.ingress[0].hostname}'"
+}
+
+output "aws_access_key_id" {
+  description = "The AWS access key ID for Bedrock access."
+  value       = aws_iam_access_key.bedrock_access_key.id
+  sensitive   = true
+}
+
+output "aws_secret_access_key" {
+  description = "The AWS secret access key for Bedrock access."
+  value       = aws_iam_access_key.bedrock_access_key.secret
+  sensitive   = true
+}

@@ -43,14 +43,6 @@ private_subnet_cidrs = [
   "10.1.3.0/24",
   "10.1.4.0/24"
 ]
-node_groups = {
-  default = {
-    desired_capacity = 2
-    max_capacity     = 3
-    min_capacity     = 1
-    instance_type    = "t3.medium"
-  }
-}
 bedrock_models = {
   "claude" = {
     model_id     = "anthropic.claude-v2"
@@ -86,18 +78,36 @@ Apply the terraform configuration:
 terraform apply
 ```
 
+### Configure `kubectl` CLI access
+
+```bash
+aws eks --region $(terraform output -raw region) update-kubeconfig \
+    --name $(terraform output -raw cluster_name)
+```
+
 ### Accessing the Envoy AI Gateway
 
 Once deployed, you can access the different Bedrock models through the following endpoints:
 - Claude: `http://<gateway-address>/claude`
 - Llama: `http://<gateway-address>/llama`
 
+To get the gateway address, run:
+```bash
+kubectl get svc -n envoy-gateway-system -l app.kubernetes.io/name=envoy -o jsonpath='{.items[0].status.loadBalancer.ingress[0].hostname}'
+```
+
 Example request to Claude:
-```json
-{
-  "prompt": "Hello, how are you?",
-  "max_tokens": 100
-}
+```bash
+curl -X POST "http://$(kubectl get svc -n envoy-gateway-system -l app.kubernetes.io/name=envoy -o jsonpath='{.items[0].status.loadBalancer.ingress[0].hostname}')/claude" \
+  -H "Content-Type: application/json" \
+  -d '{"prompt": "Hello, how are you?", "max_tokens": 100}'
+```
+
+Example request to llama:
+```bash
+curl -X POST "http://$(kubectl get svc -n envoy-gateway-system -l app.kubernetes.io/name=envoy -o jsonpath='{.items[0].status.loadBalancer.ingress[0].hostname}')/llama" \
+  -H "Content-Type: application/json" \
+  -d '{"prompt": "Hello, how are you?", "max_tokens": 100}'
 ```
 
 ### Clean Up

@@ -57,11 +57,9 @@ variable "envoy_ai_gateway_config" {
   description = "Configuration for Envoy AI Gateway."
   type = object({
     namespace = string
-    version   = string
   })
   default = {
     namespace = "envoy-ai-gateway-system"
-    version   = "v0.0.0-latest"
   }
 }
 
