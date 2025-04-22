@@ -10,6 +10,9 @@ module "vpc" {
   public_subnets  = slice(var.public_subnet_cidrs, 0, 2)
   private_subnets = slice(var.private_subnet_cidrs, 0, 2)
 
+  # Enable public IP auto-assignment for public subnets
+  map_public_ip_on_launch = true
+
   # Minimal NAT gateway configuration
   enable_nat_gateway = true
   single_nat_gateway = true  # Use a single NAT gateway to reduce costs

@@ -3,7 +3,7 @@ module "eks" {
   version         = "~> 20.36"
   cluster_name    = var.cluster_name
   cluster_version = var.cluster_version
-  subnet_ids      = module.vpc.private_subnets
+  subnet_ids      = module.vpc.public_subnets
   vpc_id          = module.vpc.vpc_id
 
   # Minimal node group configuration
