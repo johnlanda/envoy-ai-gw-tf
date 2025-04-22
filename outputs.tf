@@ -29,6 +29,7 @@ output "cluster_arn" {
 }
 
 output "kubernetes_config" {
+  sensitive = true
   value = {
     host                   = module.eks.cluster_endpoint
     cluster_ca_certificate = base64decode(module.eks.cluster_certificate_authority_data)
