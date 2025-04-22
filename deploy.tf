@@ -56,8 +56,6 @@ resource "kubernetes_manifest" "gateway" {
           type = "HTTP"
           config = {
             region = var.region
-            # TODO: should this be a var?
-            assumeRoleArn = data.aws_caller_identity.self.arn
             models = values(var.bedrock_models)
           }
         }
