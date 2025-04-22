@@ -105,3 +105,13 @@ To destroy all resources created by this module:
 ```shell
 terraform destroy
 ```
+
+## Developers
+
+### Updating the TF lock file
+
+Run the following command to ensure all the supported platforms are included in the new lock file
+
+```shell
+terraform providers lock -platform=darwin_amd64 -platform=darwin_arm64 -platform=windows_amd64 -platform=linux_amd64 -platform=linux_arm64
+```
