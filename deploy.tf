@@ -2,7 +2,7 @@
 resource "helm_release" "envoy_gateway_crds" {
   name             = "envoy-gateway-crds"
   chart            = "oci://docker.io/envoyproxy/gateway-helm"
-  version          = "v1.3.2"
+  version          = "v0.0.0-latest"
   namespace        = "envoy-gateway-system"
   create_namespace = true
 
@@ -20,7 +20,7 @@ resource "helm_release" "envoy_gateway_crds" {
 resource "helm_release" "envoy_ai_gateway" {
   name             = "aieg"
   chart            = "oci://docker.io/envoyproxy/ai-gateway-helm"
-  version          = "v0.1.5"
+  version          = "v0.0.0-latest"
   namespace        = "envoy-gateway-system"
   create_namespace = true
 
